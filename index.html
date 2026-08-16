@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Dashboard - Smart Road AI System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .road-health-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .health-score-badge {
+      text-align: center;
+    }
+    .health-val {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .health-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    #mini-map {
+      height: 300px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="main-wrapper">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+
+        <!-- Road Health Score Banner -->
+        <div class="road-health-tile">
+          <div>
+            <h2 style="font-size:1.3rem; margin-bottom:0.3rem;">Overall Municipal Road Health</h2>
+            <p style="color:var(--text-muted); font-size:0.85rem;" id="health-summary-text">Calculating telemetry data...</p>
+          </div>
+          <div class="health-score-badge">
+            <div class="health-val" id="health-score-num">--</div>
+            <div class="health-label" id="health-score-cond">POOR</div>
+          </div>
+        </div>
+
+        <!-- KPI Stats Cards Grid -->
+        <div class="stats-grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Total Potholes</span>
+              <span>🛑</span>
+            </div>
+            <div class="card-value" id="kpi-total">--</div>
+            <div class="card-subtext">Active & Monitored defects</div>
+          </div>
+
+          <div class="card stat-critical">
+            <div class="card-header">
+              <span class="card-title">Critical Severity</span>
+              <span>🚨</span>
+            </div>
+            <div class="card-value" id="kpi-critical">--</div>
+            <div class="card-subtext">Immediate action required</div>
+          </div>
+
+          <div class="card stat-high">
+            <div class="card-header">
+              <span class="card-title">High Risk</span>
+              <span>⚠️</span>
+            </div>
+            <div class="card-value" id="kpi-high">--</div>
+            <div class="card-subtext">High traffic impact</div>
+          </div>
+
+          <div class="card stat-good">
+            <div class="card-header">
+              <span class="card-title">Resolved & Fixed</span>
+              <span>✅</span>
+            </div>
+            <div class="card-value" id="kpi-closed">--</div>
+            <div class="card-subtext">AI Verified repairs</div>
+          </div>
+
+          <div class="card stat-critical">
+            <div class="card-header">
+              <span class="card-title">Overdue Alerts</span>
+              <span>⏳</span>
+            </div>
+            <div class="card-value" id="kpi-overdue">--</div>
+            <div class="card-subtext">Exceeded repair deadline</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Two-Column Layout -->
+        <div class="dashboard-grid">
+          <!-- Recent Pothole Detections Table -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Recent AI Detection Telemetry</span>
+              <a href="potholes.html" class="btn btn-secondary" style="padding:0.4rem 0.8rem; font-size:0.75rem;">View All</a>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Pothole ID</th>
+                    <th>Location / Road</th>
+                    <th>Confidence</th>
+                    <th>Severity</th>
+                    <th>Risk Level</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-potholes-tbody">
+                  <tr><td colspan="6" style="text-align:center; padding:2rem;">Loading detection records...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick GIS Map Preview -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Geospatial Distribution</span>
+              <a href="map.html" class="btn btn-secondary" style="padding:0.4rem 0.8rem; font-size:0.75rem;">Full GIS Map</a>
+            </div>
+            <div id="mini-map"></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

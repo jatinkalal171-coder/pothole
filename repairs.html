@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repair Work Orders & AI Verification - Smart Road AI System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .repair-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1.5rem;
+    }
+    .verify-box {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="main-wrapper">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+
+        <div class="repair-grid">
+          <!-- Assign Work Order Form -->
+          <div>
+            <div class="card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <span class="card-title">Assign Repair Work Order</span>
+              </div>
+
+              <form id="assign-repair-form">
+                <div class="form-group">
+                  <label>Pothole ID</label>
+                  <select id="assign-pothole-id" class="form-control" required>
+                    <option value="">Loading OPEN Potholes...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Field Officer</label>
+                  <select id="assign-officer" class="form-control">
+                    <option value="3|Field Officer 07">Field Officer 07 (Road Maintenance)</option>
+                    <option value="1|System Admin">System Admin</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Department</label>
+                  <input type="text" id="assign-dept" class="form-control" value="Municipal Road Maintenance Dept">
+                </div>
+
+                <div class="form-group">
+                  <label>Repair Deadline</label>
+                  <input type="date" id="assign-deadline" class="form-control" value="2026-08-20" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="assign-btn">
+                  Issue Work Order 🛠️
+                </button>
+              </form>
+            </div>
+
+            <!-- Before/After AI Repair Verification Form -->
+            <div class="verify-box">
+              <h3 style="font-size:1.1rem; margin-bottom:0.4rem; color:var(--accent-cyan);">🔬 AI Before/After Repair Verification</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Upload field repair proof photo. The AI model will inspect the image to verify pothole elimination.</p>
+
+              <form id="verify-repair-form">
+                <div class="form-group">
+                  <label>Select Active Work Order ID</label>
+                  <select id="verify-repair-id" class="form-control" required>
+                    <option value="">Select Work Order...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Field Repair Proof Photo (After Image)</label>
+                  <input type="file" id="verify-after-image" class="form-control" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="verify-btn" style="background:linear-gradient(135deg, #10b981, #06b6d4);">
+                  Run AI Verification Inspection 🔬
+                </button>
+              </form>
+
+              <div id="verify-result-box" style="display:none; margin-top:1rem; padding:1rem; border-radius:var(--radius-md); font-size:0.85rem;">
+                <!-- Result populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Work Orders Table -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Municipality Work Order Management</span>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Work Order ID</th>
+                    <th>Pothole ID</th>
+                    <th>Officer</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>AI Verification</th>
+                  </tr>
+                </thead>
+                <tbody id="repairs-tbody">
+                  <tr><td colspan="6" style="text-align:center; padding:2rem;">Loading repair work orders...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/repairs.js"></script>
+</body>
+</html>
